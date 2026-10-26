@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動画をhtmlに埋め込む</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One:ital@0;1&display=swap" rel="stylesheet">
+    <!-- 必ずgoogle font関連のhtmlを最初に貼る -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .video_wrapper {
+            width: 100vw;
+            height: 100vh;
+            margin: 0 auto;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        video {
+            object-fit: cover;
+            object-position: 60% 20%;
+            /* object-position:x方向　y方向; 初期値は50%,50% */
+            width: 100%;
+            height: 100%;
+        }
+
+        .text_wrapper {
+            width: 50%;
+            padding: 200px 100px;
+            background-color: #ffffff94;
+            /* backdrop-filter: blur(10px); */
+            /* 文字の背景にくる要素をぼかす記述 */
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 50px;
+            font-family: "Alumni Sans Inline One", sans-serif;
+            background-color: #ff65657f;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            letter-spacing: 0.1em;
+            line-height: 2;
+            background-color:       #a77c7c22;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video_wrapper">
+        <video src="img/main.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <div class="text_wrapper">
+        <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, dolorum?</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, ratione fugit vel provident neque eaque
+            dolorum fuga, voluptatibus tempore hic quidem minus esse maiores. Commodi perspiciatis dolorem quis
+            quibusdam quidem, modi quia, labore, consequatur hic a rem facilis expedita maiores illo laudantium soluta
+            maxime! Perferendis architecto est minima quia voluptas ex ipsa temporibus asperiores ea accusantium maxime
+            optio consequatur quis, quam ut iste, animi rem quisquam mollitia placeat qui a, cupiditate voluptate.
+            Temporibus, ratione. Alias, modi architecto culpa totam praesentium repellat asperiores molestias rem
+            sapiente suscipit blanditiis inventore, hic porro illo sit, voluptatum error ea nisi ipsum beatae quasi
+            natus quia quod! Ab accusantium doloremque perspiciatis inventore sequi hic sint, impedit eveniet quod,
+            reprehenderit nesciunt nulla quas dolorum? Nobis cumque similique corporis consequuntur, aliquid velit
+            ratione porro, praesentium provident rerum beatae voluptas repudiandae, distinctio voluptatum architecto
+            officiis facere eveniet! Rem in, suscipit provident vitae obcaecati corrupti debitis, laborum eveniet
+            explicabo velit molestiae? Doloremque totam numquam mollitia aliquid similique, quis aliquam ipsam
+            laudantium ad quibusdam possimus expedita animi sed unde repudiandae harum saepe eaque delectus a facere
+            dignissimos consequuntur ea. Officia pariatur, animi odio odit illum beatae. Voluptates tempora vero
+            inventore, ullam, recusandae, veritatis ducimus deserunt odio exercitationem omnis minima nesciunt?</p>
+    </div>
+
+</body>
+
+</html>
