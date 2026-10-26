@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サインアニメーション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #curtain {
+            width: 100%;
+            height: 100vh;
+            background-color: #f3ebdb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: calc(infinity);
+            /* 最上位のレイヤーになる */
+        }
+
+        .wrapper {
+            width: 100%;
+            height: 100vh;
+            background-color: #f3ebdb;
+        }
+
+        .box,
+        .box2 {
+            width: clamp(20rem, 80vw, 60rem);
+            height: clamp(12.5rem, 50vw, 37.5rem);
+            margin: 0 auto;
+        }
+
+        .box {
+            margin: 100px auto 50px;
+        }
+
+        svg>path.st1 {
+
+            /* stroke: red; */
+            stroke-width: 9px;
+            stroke-dasharray: 2980px;
+            stroke-dashoffset: 2980px;
+
+
+            animation: sign 2s linear forwards;
+        }
+
+        svg>line.st1 {
+            stroke-width: 9px;
+            stroke-dasharray: 2980px;
+            stroke-dashoffset: 2980px;
+
+
+            animation: sign 2s 2s linear forwards;
+
+            &:nth-of-type(2) {
+                /* 一本目のline.st0を描くのにかかる時間が計測したところ約1.5sだったので、path.st0の5sと足して余白を付けて7sにしている。 */
+                animation: sign 2s 2.5s linear forwards;
+            }
+        }
+
+        svg>path.st1:nth-of-type(2) {
+
+            animation: sign 3s 2.8s linear forwards;
+        }
+        svg>path.st1:nth-of-type(3) {
+
+            animation: sign 3s 3.3s linear forwards;
+        }
+        svg>path.st1:nth-of-type(4) {
+
+            animation: sign 5s 3.8s linear forwards;
+        }
+        svg>path.st1:nth-of-type(5) {
+
+            animation: sign 5s 4.2s linear forwards;
+        }
+
+        @keyframes sign {
+            0% {
+                stroke-dashoffset: 2980px;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+          .box2 {
+            margin-bottom: 100px;
+            }
+            
+            .box2 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="curtain">
+        <div class="box">
+        <svg id="_レイヤー_1" data-name="レイヤー_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1130 722">
+            <!-- Generator: Adobe Illustrator 29.8.3, SVG Export Plug-In . SVG Version: 2.1.1 Build 3)  -->
+            <defs>
+                <style>
+                    .st0 {
+                        opacity: .1;
+                    }
+
+                    .st1 {
+                        fill: none;
+                        stroke: #000;
+                        stroke-miterlimit: 10;
+                        stroke-width: 9px;
+                    }
+                </style>
+            </defs>
+            <path class="st1"
+                d="M7,64h268c-113,135-387,445-57,478S488,226,474,200s265,297,90,299c81,71,196,289-68,158-86-45,239-59,374,20s215-9,246-63" />
+            <line class="st1" x1="820" y1="9" x2="288" y2="708.5" />
+            <line class="st1" x1="731" y1="203" x2="1023" y2="640" />
+            <path class="st1" d="M195,305.1c53,19.2,95,150.9-32,162.9s-79.6-203.3,32-162.9Z" />
+            <path class="st1" d="M384.6,315.8c69.5-3.5,104.8,145.6-15.4,163.9s-118-157.2,15.4-163.9Z" />
+            <path class="st1" d="M195,305.1c-46.1-9.3-61,73.9-14,72.9s64-62.8,14-72.9Z" />
+            <path class="st1" d="M389.2,316.7c-56.3-13.6-54.2,91.7-11.2,81s72.4-66.2,11.2-81Z" />
+        </svg>
+    </div>
+    </div>
+    
+<div class="wrapper">
+    <div class="box2">
+        <img src="img/hikaru_signeye_gif3.gif" alt="">
+    </div>
+</div>
+    
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            const animeKey = 'lastAnimationTime'; //localStorageに保存する為の名前
+            const lastTime = localStorage.getItem(animeKey); //前回保存した時刻
+            const now = Date.now();//タイムスタンプを取得(JSはミリ秒)
+            const dayInMs = 24 * 60 * 60 * 1000; // 24時間をミリ秒に換算した値
+
+            //初回訪問または24時間以上経過した場合
+            if (!lastTime || (now - Number(lastTime)) >= dayInMs) {
+                //アクセス時間を保存する
+                localStorage.setItem(animeKey, now);
+                $('#curtain').delay(4000).fadeOut(2000);
+            } else {
+                $('#curtain').hide();
+            }
+
+
+        }); 
+    </script>
+</body>
+
+</html>
