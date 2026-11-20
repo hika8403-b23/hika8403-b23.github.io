@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tsundoku Shelf</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#243128",
+              cream: "#f7f5ef",
+              moss: "#66745d",
+              clay: "#b86f4a",
+              line: "#dfddd4"
+            },
+            fontFamily: {
+              sans: ["Inter", "Hiragino Kaku Gothic ProN", "Meiryo", "sans-serif"],
+              serif: ["Noto Serif JP", "Yu Mincho", "serif"]
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="bg-cream text-ink">
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Tsundoku Shelf">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 4.5h9.5A2.5 2.5 0 0 1 17 7v12H7.5A2.5 2.5 0 0 1 5 16.5v-12Z"/><path d="M17 7.5A2.5 2.5 0 0 1 19.5 10v9H7.5A2.5 2.5 0 0 0 5 16.5"/></svg>
+          </span>
+          <span>
+            <strong>Tsundoku</strong>
+            <small>Shelf</small>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="メインナビゲーション">
+          <button class="nav-item active" data-nav="shelf">マイ本棚</button>
+          <button class="nav-item" data-nav="search">本を検索</button>
+        </nav>
+        <button class="icon-button" id="settingsButton" aria-label="設定">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-1.87 1.87-.06-.06A1.65 1.65 0 0 0 16 18.36a1.65 1.65 0 0 0-1 .6l-.05.07a1.65 1.65 0 0 0-.4 1.08v.09H12v-.09A1.65 1.65 0 0 0 11.6 19a1.65 1.65 0 0 0-1-.62 1.65 1.65 0 0 0-1.82.33l-.06.06-1.87-1.87.06-.06A1.65 1.65 0 0 0 7.24 15a1.65 1.65 0 0 0-.6-1l-.07-.05a1.65 1.65 0 0 0-1.08-.4h-.09V11h.09A1.65 1.65 0 0 0 6.58 10.6a1.65 1.65 0 0 0 .62-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06 1.87-1.87.06.06A1.65 1.65 0 0 0 10.6 6.24a1.65 1.65 0 0 0 1-.6l.05-.07A1.65 1.65 0 0 0 12.05 4.5h.09V2h2.55v.09A1.65 1.65 0 0 0 15.1 3.6a1.65 1.65 0 0 0 1 .62 1.65 1.65 0 0 0 1.82-.33l.06-.06 1.87 1.87-.06.06A1.65 1.65 0 0 0 18.76 7a1.65 1.65 0 0 0 .6 1l.07.05a1.65 1.65 0 0 0 1.08.4h.09v2.55h-.09A1.65 1.65 0 0 0 19.4 12a1.65 1.65 0 0 0-.6 1l-.05.07A1.65 1.65 0 0 0 19.4 15Z"/></svg>
+        </button>
+      </header>
+
+      <main>
+        <section id="shelfView" class="view">
+          <div class="welcome-row">
+            <div>
+              <p class="eyebrow">MY LIBRARY</p>
+              <h1>マイ本棚</h1>
+            </div>
+            <button class="primary-button" id="randomBookButton">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+              次に読む1冊
+            </button>
+          </div>
+
+          <div class="stats-grid" aria-label="読書統計">
+            <article class="stat-card">
+              <span class="stat-icon clay"><svg viewBox="0 0 24 24"><path d="M8 3v3M16 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/><path d="m9 15 2 2 4-5"/></svg></span>
+              <div><strong id="monthCompleted">0</strong><span>冊</span><p>今月の読了</p></div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V5H6.5A2.5 2.5 0 0 0 4 7.5v12Z"/><path d="M8 7h8M8 11h5"/></svg></span>
+              <div><strong id="totalCompleted">0</strong><span>冊</span><p>累計読了</p></div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon sand"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6zM9 7h6M9 11h6M9 15h4"/></svg></span>
+              <div><strong id="tsundokuCount">0</strong><span>冊</span><p>現在の積読</p></div>
+            </article>
+          </div>
+
+          <div class="shelf-toolbar">
+            <div class="status-tabs" role="tablist" aria-label="ステータス">
+              <button class="status-tab active" role="tab" data-status="all">すべて <span id="countAll">0</span></button>
+              <button class="status-tab" role="tab" data-status="tsundoku">積読（読みたい） <span id="countTsundoku">0</span></button>
+              <button class="status-tab" role="tab" data-status="reading">読書中 <span id="countReading">0</span></button>
+              <button class="status-tab" role="tab" data-status="completed">読了 <span id="countCompleted">0</span></button>
+            </div>
+            <div class="filter-row">
+              <label class="search-field compact">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+                <input id="shelfSearch" type="search" placeholder="本棚から検索" />
+              </label>
+              <label class="sort-field">
+                <select id="sortShelf" aria-label="並び替え">
+                  <option value="addedDesc">追加日：新しい順</option>
+                  <option value="ratingDesc">評価：高い順</option>
+                  <option value="completedDesc">読了日：新しい順</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div id="shelfGrid" class="book-grid"></div>
+        </section>
+
+        <section id="searchView" class="view hidden">
+          <div class="search-header">
+            <div>
+              <p class="eyebrow">DISCOVER</p>
+              <h1>本を検索</h1>
+            </div>
+          </div>
+          <form id="bookSearchForm" class="book-search-form">
+            <div class="search-type">
+              <button type="button" class="type-button active" data-filter="all">すべて</button>
+              <button type="button" class="type-button" data-filter="title">タイトル</button>
+              <button type="button" class="type-button" data-filter="author">著者</button>
+              <button type="button" class="type-button" data-filter="isbn">ISBN</button>
+            </div>
+            <div class="main-search-row">
+              <label class="search-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+                <input id="bookSearchInput" type="search" placeholder="本のタイトル、著者名、キーワード..." />
+              </label>
+              <button class="search-button" type="submit">検索</button>
+            </div>
+          </form>
+          <div class="search-result-heading">
+            <p id="searchResultLabel">おすすめの本</p>
+            <span id="searchStatus"></span>
+          </div>
+          <div id="searchGrid" class="search-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="bookModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="closeBookModal" aria-label="閉じる">×</button>
+        <div class="modal-content">
+          <div class="modal-cover" id="modalCover"></div>
+          <div class="modal-details">
+            <p class="modal-label">読書記録</p>
+            <h2 id="modalTitle"></h2>
+            <p class="modal-author" id="modalAuthor"></p>
+            <label class="form-label" for="modalStatus">ステータス</label>
+            <select id="modalStatus" class="form-control">
+              <option value="tsundoku">積読（読みたい）</option>
+              <option value="reading">読書中</option>
+              <option value="completed">読了</option>
+            </select>
+            <fieldset class="rating-field">
+              <legend class="form-label">評価</legend>
+              <div id="ratingStars" class="rating-stars" aria-label="5段階評価"></div>
+            </fieldset>
+            <label class="form-label" for="completedDate">読了日</label>
+            <input id="completedDate" class="form-control" type="date" />
+            <label class="form-label" for="bookMemo">感想・メモ</label>
+            <textarea id="bookMemo" class="form-control memo-input" rows="4" placeholder="読後の感想や印象に残った言葉を..."></textarea>
+            <div class="modal-actions">
+              <button class="delete-button" id="deleteBookButton">
+                <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg>
+                削除
+              </button>
+              <button class="save-button" id="saveBookButton">変更を保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="randomModal" aria-hidden="true">
+      <div class="modal random-modal" role="dialog" aria-modal="true" aria-labelledby="randomTitle">
+        <button class="modal-close" id="closeRandomModal" aria-label="閉じる">×</button>
+        <p class="random-kicker">NEXT READ</p>
+        <h2 id="randomTitle">次に読む1冊</h2>
+        <div id="randomContent"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./script.js"></script>
+  </body>
+</html>
