@@ -133,6 +133,61 @@ function switchView(view) {
   document.querySelectorAll(".nav-item").forEach(button => button.classList.toggle("active", button.dataset.nav === view));
 }
 
+async function fetchGoogleBooks(query) {
+  const hosts = [
+    "https://www.googleapis.com",
+    "https://books.googleapis.com"
+  ];
+  let lastError = null;
+
+  for (const host of hosts) {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 12000);
+      try {
+        const response = await fetch(
+          `${host}/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=18&printType=books`,
+          { signal: controller.signal }
+        );
+        if (!response.ok) {
+          lastError = new Error(`Google Books API: HTTP ${response.status}`);
+          throw lastError;
+        } else {
+          const data = await response.json();
+          return data.items || [];
+        }
+      } catch (error) {
+        lastError = error;
+      } finally {
+        window.clearTimeout(timeoutId);
+      }
+      await new Promise(resolve => window.setTimeout(resolve, 500 * (attempt + 1)));
+    }
+  }
+  throw lastError || new Error("Google Books APIへの接続に失敗しました");
+}
+
+async function fetchOpenLibrary(query, term) {
+  const typePrefix = query !== term ? query.slice(0, query.indexOf(":") + 1) : "";
+  let params = `q=${encodeURIComponent(term)}&limit=18&fields=key,title,author_name,first_publish_year,isbn,cover_i`;
+  if (typePrefix === "inauthor:") params = `author=${encodeURIComponent(term)}&limit=18&fields=key,title,author_name,first_publish_year,isbn,cover_i`;
+  if (typePrefix === "intitle:") params = `title=${encodeURIComponent(term)}&limit=18&fields=key,title,author_name,first_publish_year,isbn,cover_i`;
+  if (typePrefix === "isbn:") params = `isbn=${encodeURIComponent(term)}&limit=18&fields=key,title,author_name,first_publish_year,isbn,cover_i`;
+
+  const response = await fetch(`https://openlibrary.org/search.json?${params}`);
+  if (!response.ok) throw new Error("代替検索サービスへの接続に失敗しました");
+  const data = await response.json();
+  return (data.docs || []).map(doc => ({
+    id: doc.key?.replace("/works/", "") || `openlibrary-${doc.title}-${doc.isbn?.[0] || ""}`,
+    volumeInfo: {
+      title: doc.title || "タイトル不明",
+      authors: doc.author_name || [],
+      publishedDate: doc.first_publish_year ? String(doc.first_publish_year) : "",
+      imageLinks: doc.cover_i ? { thumbnail: `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg` } : undefined
+    }
+  }));
+}
+
 async function searchBooks(event) {
   if (event) event.preventDefault();
   const input = document.getElementById("bookSearchInput");
@@ -154,16 +209,35 @@ async function searchBooks(event) {
   grid.innerHTML = "";
 
   try {
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=18&langRestrict=ja`);
-    if (!response.ok) throw new Error("検索に失敗しました");
-    const data = await response.json();
-    window.lastSearchItems = data.items || [];
+    let usedFallback = false;
+    let items = [];
+    try {
+      items = await fetchGoogleBooks(query);
+    } catch {
+      usedFallback = true;
+      items = await fetchOpenLibrary(query, term);
+    }
+    if (!items.length && !usedFallback) {
+      items = await fetchOpenLibrary(query, term);
+      usedFallback = true;
+    }
+    window.lastSearchItems = items;
     document.getElementById("searchResultLabel").textContent = "検索結果";
     status.textContent = `${window.lastSearchItems.length}件`;
+    if (usedFallback) status.textContent += "（代替検索）";
     renderSearchCards(window.lastSearchItems);
   } catch (error) {
     status.textContent = "";
-    grid.innerHTML = `<div class="empty-state"><div><h3>検索できませんでした</h3><p>通信環境を確認して、もう一度お試しください。</p></div></div>`;
+    const rateLimited = error.message.includes("429");
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div>
+          <h3>検索できませんでした</h3>
+          <p>${rateLimited ? "検索サービスが混雑しています。少し待ってから再試行してください。" : "通信環境を確認して、もう一度お試しください。"}</p>
+          <button type="button" class="add-button" id="retrySearchButton" style="margin-top:14px">再試行</button>
+        </div>
+      </div>`;
+    document.getElementById("retrySearchButton").addEventListener("click", () => searchBooks());
   }
 }
 
