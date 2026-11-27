@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="学習と制作の成果をまとめたポートフォリオサイトです。">
   <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <script>
     try {
       if (window.sessionStorage.getItem('portfolioOpeningPlayed') === 'true') {
@@ -14,13 +17,13 @@
       console.error('Could not read the opening state from sessionStorage.', error);
     }
   </script>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="opening-curtain" aria-label="オープニング演出">
     <div class="curtain-left" aria-hidden="true"></div>
     <div class="curtain-right" aria-hidden="true"></div>
-    <img class="opening-curtain__image" src="assets/images/opening.gif" alt="ポートフォリオサイトへようこそ">
+    <img class="opening-curtain__image" src="images/opening.gif" alt="ポートフォリオサイトへようこそ">
     <button class="opening-curtain__skip" type="button">スキップ</button>
   </div>
 
@@ -87,7 +90,7 @@
       <ul class="works__list">
         <li class="works__item">
           <a class="works__link" href="works/work-01.html">
-            <img class="works__image" src="assets/images/works/work-01.jpg" alt="" loading="lazy">
+            <img class="works__image" src="images/works/work-01.jpg" alt="" loading="lazy">
             <div class="works__details">
               <h3 class="works__title">作品 01</h3>
               <p class="works__category">Webサイト</p>
@@ -96,7 +99,7 @@
         </li>
         <li class="works__item">
           <a class="works__link" href="works/work-02.html">
-            <img class="works__image" src="assets/images/works/work-02.jpg" alt="" loading="lazy">
+            <img class="works__image" src="images/works/work-02.jpg" alt="" loading="lazy">
             <div class="works__details">
               <h3 class="works__title">作品 02</h3>
               <p class="works__category">Webサイト</p>
@@ -105,7 +108,7 @@
         </li>
         <li class="works__item">
           <a class="works__link" href="works/work-03.html">
-            <img class="works__image" src="assets/images/works/work-03.jpg" alt="" loading="lazy">
+            <img class="works__image" src="images/works/work-03.jpg" alt="" loading="lazy">
             <div class="works__details">
               <h3 class="works__title">作品 03</h3>
               <p class="works__category">Webサイト</p>
@@ -121,6 +124,6 @@
     <small class="site-footer__copyright">&copy; Portfolio</small>
   </footer>
 
-  <script src="assets/js/main.js" defer></script>
+  <script src="js/script.js" defer></script>
 </body>
 </html>
