@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学習と制作の成果をまとめたポートフォリオサイトです。">
+  <title>Portfolio</title>
+  <script>
+    try {
+      if (window.sessionStorage.getItem('portfolioOpeningPlayed') === 'true') {
+        document.documentElement.classList.add('opening-has-played');
+      }
+    } catch (error) {
+      console.error('Could not read the opening state from sessionStorage.', error);
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="opening-curtain" aria-label="オープニング演出">
+    <div class="curtain-left" aria-hidden="true"></div>
+    <div class="curtain-right" aria-hidden="true"></div>
+    <img class="opening-curtain__image" src="assets/images/opening.gif" alt="ポートフォリオサイトへようこそ">
+    <button class="opening-curtain__skip" type="button">スキップ</button>
+  </div>
+
+  <header class="site-header">
+    <a class="site-header__logo" href="#top">Portfolio</a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <ul class="site-nav__list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#works">Works</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="hero__eyebrow">Portfolio</p>
+      <h1 class="hero__title" id="hero-title">学びをかたちに、<br>想いをデザインに。</h1>
+      <p class="hero__description">学習と制作の成果をご紹介します。</p>
+      <a class="hero__link" href="#works">作品を見る</a>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="section-heading">
+        <p class="section-heading__eyebrow">About</p>
+        <h2 class="section-heading__title" id="about-title">自己紹介</h2>
+      </div>
+      <div class="about__content">
+        <div class="about__portrait" role="img" aria-label="プロフィール画像"></div>
+        <div class="about__text">
+          <h3 class="about__name">プロフィール</h3>
+          <p>学習を通じて身につけた知識や、制作で大切にしていることをご紹介します。</p>
+          <p>課題や目的に向き合い、使う人に伝わるデザインと実装を目指しています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills" id="skills" aria-labelledby="skills-title">
+      <div class="section-heading">
+        <p class="section-heading__eyebrow">Skills</p>
+        <h2 class="section-heading__title" id="skills-title">スキル</h2>
+      </div>
+      <ul class="skills__list">
+        <li class="skills__item">
+          <h3>HTML</h3>
+          <p>情報を整理し、意味の伝わる構造を作成します。</p>
+        </li>
+        <li class="skills__item">
+          <h3>CSS</h3>
+          <p>レイアウトや見た目を整え、画面幅に応じて表示します。</p>
+        </li>
+        <li class="skills__item">
+          <h3>JavaScript</h3>
+          <p>ページに必要な操作や動きを実装します。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="works" id="works" aria-labelledby="works-title">
+      <div class="section-heading">
+        <p class="section-heading__eyebrow">Works</p>
+        <h2 class="section-heading__title" id="works-title">制作作品</h2>
+      </div>
+      <ul class="works__list">
+        <li class="works__item">
+          <a class="works__link" href="works/work-01.html">
+            <img class="works__image" src="assets/images/works/work-01.jpg" alt="" loading="lazy">
+            <div class="works__details">
+              <h3 class="works__title">作品 01</h3>
+              <p class="works__category">Webサイト</p>
+            </div>
+          </a>
+        </li>
+        <li class="works__item">
+          <a class="works__link" href="works/work-02.html">
+            <img class="works__image" src="assets/images/works/work-02.jpg" alt="" loading="lazy">
+            <div class="works__details">
+              <h3 class="works__title">作品 02</h3>
+              <p class="works__category">Webサイト</p>
+            </div>
+          </a>
+        </li>
+        <li class="works__item">
+          <a class="works__link" href="works/work-03.html">
+            <img class="works__image" src="assets/images/works/work-03.jpg" alt="" loading="lazy">
+            <div class="works__details">
+              <h3 class="works__title">作品 03</h3>
+              <p class="works__category">Webサイト</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="site-footer__logo" href="#top">Portfolio</a>
+    <small class="site-footer__copyright">&copy; Portfolio</small>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
